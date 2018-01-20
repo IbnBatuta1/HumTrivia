@@ -31,4 +31,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_dialog"/>
 
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_send"
+        tools:layout_editor_absoluteX="286dp"
+        tools:layout_editor_absoluteY="30dp" />
+
 </android.support.constraint.ConstraintLayout>
