@@ -22,3 +22,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+dependencies {
+    compile 'com.h6ah4i.android:openslmediaplayer:0.7.5'
+}

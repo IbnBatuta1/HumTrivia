@@ -7,10 +7,10 @@
                                              tools:context="com.example.yasaad.humtrivia.UI.HomeScreen">
 
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="79dp"
-        android:layout_height="77dp"
-        android:layout_marginBottom="8dp"
+        android:id="@+id/RecordingButton"
+        android:layout_width="144dp"
+        android:layout_height="136dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:contentDescription="Record"
@@ -20,25 +20,25 @@
         app:srcCompat="@android:drawable/ic_btn_speak_now"/>
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/Stop"
         style="@android:style/Widget.DeviceDefault.Light.ImageButton"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="67dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:contentDescription="Delete Recording"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_dialog" />
+        app:srcCompat="@android:drawable/btn_dialog"/>
 
     <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/Upload"
+        android:layout_width="72dp"
+        android:layout_height="65dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_send" />
+        app:srcCompat="@android:drawable/ic_menu_send"/>
 
 </android.support.constraint.ConstraintLayout>
