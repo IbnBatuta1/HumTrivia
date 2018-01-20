@@ -34,5 +34,12 @@
             android:layout_margin="15dp"
             android:text="Login" />
 
+        <TextView
+            android:id="@+id/textViewSignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Sign up here"
+            android:textAlignment="center" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

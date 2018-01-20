@@ -100,9 +100,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     , HomeScreen.class));
                         } else {
                             Toast.makeText(MainActivity.this
-                                    , "Please try again"
+                                    , "This email is already in use"
                                     , Toast.LENGTH_SHORT).show();
                         }
+                        progressDialog.dismiss();
                     }
                 });
     }

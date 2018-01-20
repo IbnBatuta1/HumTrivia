@@ -1,6 +1,7 @@
 package com.example.yasaad.humtrivia.UI;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +9,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yasaad.humtrivia.MainActivity;
 import com.example.yasaad.humtrivia.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +26,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private Button buttonLogin;
     private EditText editTextEmail;
     private EditText editTextPassword;
+
+    private TextView textViewSignup;
 
     private ProgressDialog progressDialog;
 
@@ -38,11 +43,14 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
+        textViewSignup = (TextView) findViewById(R.id.textViewSignup);
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);
 
         buttonLogin.setOnClickListener(this);
+        textViewSignup.setOnClickListener(this);
 
     }
 
@@ -50,6 +58,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         if (view == buttonLogin) {
             signIn();
+        }
+        if (view == textViewSignup) {
+            startActivity(new Intent(this, MainActivity.class));
         }
     }
 
@@ -68,6 +79,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             return;
         }
         // if valid
+        progressDialog.setMessage("Logging in...");
+        progressDialog.show();
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -75,11 +88,13 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+                            startActivity(new Intent(LoginScreen.this, HomeScreen.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginScreen.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
+                        progressDialog.dismiss();
 
                     }
                 });
