@@ -30,6 +30,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private static final String LOG_TAG = "Record_log";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private ImageButton recordingButton;
+    private ImageButton stop;
     private ImageButton delete;
     private ImageButton upload;
     private ImageButton play;
@@ -81,6 +82,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         upload = (ImageButton) findViewById(R.id.upload);
         progressBar = (ProgressBar) findViewById(R.id.recordingInSession);
         play = (ImageButton) findViewById(R.id.play);
+        stop = (ImageButton) findViewById(R.id.stop);
 
 
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -89,8 +91,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         progressBar.setVisibility(View.GONE);
         play.setVisibility(View.GONE);
         delete.setVisibility(View.GONE);
+        stop.setVisibility(View.GONE);
 
         delete.setOnClickListener(this);
+        play.setOnClickListener(this);
+        stop.setOnClickListener(this);
 
         recordingButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -144,6 +149,19 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     public void onClick(View view) {
         if (view == delete) {
             play.setVisibility(View.GONE);
+            delete.setVisibility(View.GONE);
+            upload.setVisibility(View.GONE);
+            stop.setVisibility(View.GONE);
+        }
+        if (view == play) {
+            //play button is pressed
+            //WRITE CODE HERE
+            play.setVisibility(View.GONE);
+            stop.setVisibility(View.VISIBLE);
+        }
+        if (view == stop) {
+            stop.setVisibility(View.GONE);
+            play.setVisibility(View.VISIBLE);
         }
     }
 }
