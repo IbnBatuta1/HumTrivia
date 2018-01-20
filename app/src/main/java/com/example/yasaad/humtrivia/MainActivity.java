@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yasaad.humtrivia.UI.HomeScreen;
 import com.example.yasaad.humtrivia.UI.LoginScreen;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -95,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             //user is successfully registered
                             Toast.makeText(MainActivity.this, "Registered Successfully"
                                     , Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(MainActivity.this
+                                    , HomeScreen.class));
                         } else {
                             Toast.makeText(MainActivity.this
                                     , "Please try again"
@@ -143,8 +146,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
-            Toast.makeText(MainActivity.this, currentUser.getEmail()
+            Toast.makeText(MainActivity.this, "Logged in as: " + currentUser.getEmail()
                     , Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, HomeScreen.class));
         } else {
             Toast.makeText(MainActivity.this, "No user signed in", Toast.LENGTH_SHORT)
                     .show();
