@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.yasaad.humtrivia.UI.HomeScreen;
 import com.example.yasaad.humtrivia.UI.LoginScreen;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -162,8 +163,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 }
-
-
-
-
 
