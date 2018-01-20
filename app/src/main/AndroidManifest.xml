@@ -26,11 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".UI.LoginActivity"
-            android:label="@string/title_activity_login">
-
-        </activity>
+        <activity android:name=".UI.LoginScreen" />
+        <activity android:name=".UI.HomeScreen"></activity>
     </application>
 
 </manifest>
