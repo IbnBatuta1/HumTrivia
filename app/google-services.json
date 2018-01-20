@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "835656737499",
+    "firebase_url": "https://humtunes-5d483.firebaseio.com",
+    "project_id": "humtunes-5d483",
+    "storage_bucket": "humtunes-5d483.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835656737499:android:a42838558a2704c9",
+        "android_client_info": {
+          "package_name": "com.example.yasaad.humtrivia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835656737499-ekjffuguk4dtt86c79ipr17hhj1sf8le.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsang4nV2DUQvr-XPVdsT1OkRfM2B4tdE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
