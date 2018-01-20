@@ -7,5 +7,5 @@ package com.example.yasaad.humtrivia.Firebase;
 public class test {
     int x = 1;
     int y = 2;
-    int z = x + y;
+    int z = x + y + 1;
 }
