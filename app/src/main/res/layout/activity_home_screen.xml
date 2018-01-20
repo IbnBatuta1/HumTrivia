@@ -7,7 +7,7 @@
                                              tools:context="com.example.yasaad.humtrivia.UI.HomeScreen">
 
     <ImageButton
-        android:id="@+id/RecordingButton"
+        android:id="@+id/recordingButton"
         android:layout_width="144dp"
         android:layout_height="136dp"
         android:layout_marginBottom="16dp"
@@ -20,7 +20,7 @@
         app:srcCompat="@android:drawable/ic_btn_speak_now"/>
 
     <ImageButton
-        android:id="@+id/Delete"
+        android:id="@+id/delete"
         style="@android:style/Widget.DeviceDefault.Light.ImageButton"
         android:layout_width="70dp"
         android:layout_height="67dp"
@@ -32,7 +32,7 @@
         app:srcCompat="@android:drawable/btn_dialog"/>
 
     <ImageButton
-        android:id="@+id/Upload"
+        android:id="@+id/upload"
         android:layout_width="72dp"
         android:layout_height="65dp"
         android:layout_marginEnd="16dp"
@@ -42,7 +42,7 @@
         app:srcCompat="@android:drawable/ic_menu_send"/>
 
     <ProgressBar
-        android:id="@+id/progressBar2"
+        android:id="@+id/recordingInSession"
         style="?android:attr/progressBarStyle"
         android:layout_width="227dp"
         android:layout_height="219dp"
@@ -55,7 +55,22 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.34"/>
+        app:layout_constraintVertical_bias="0.355" />
+
+    <ImageButton
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.408"
+        app:srcCompat="@android:drawable/ic_media_play" />
 
 
 </android.support.constraint.ConstraintLayout>
