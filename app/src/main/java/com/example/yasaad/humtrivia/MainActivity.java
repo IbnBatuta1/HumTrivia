@@ -138,7 +138,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        Toast.makeText(MainActivity.this, currentUser.getEmail(), Toast.LENGTH_SHORT).show();
+        if (currentUser != null) {
+            Toast.makeText(MainActivity.this, currentUser.getEmail()
+                    , Toast.LENGTH_SHORT).show();
+            //startActivity(new Intent(MainActivity.this, HomeScreen.class));
+        } else {
+            Toast.makeText(MainActivity.this, "No user signed in", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
 
