@@ -1,14 +1,29 @@
 package com.example.yasaad.humtrivia.SpotifyApi;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.yasaad.humtrivia.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -20,17 +35,29 @@ import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class GuessingActivity extends AppCompatActivity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback, View.OnClickListener
             {
 
-            private static final String CLIENT_ID = "a4b3c57e84044600b0ed48bbf97f9c88";
+                private static final String CLIENT_ID = "a4b3c57e84044600b0ed48bbf97f9c88";
             private static final String REDIRECT_URI = "humtrivia-login://callback";
                 private static final int REQUEST_CODE = 1337;
                 private Button newSong;
                 private Button submitTitle;
+                private ImageButton play;
+                private ImageButton pause;
                 private EditText songSuggestion;
+                private FirebaseDatabase database;
+                private FirebaseStorage storage;
+                private StorageReference storageRef;
                 private Player mPlayer;
+                private ArrayList<String> audioFiles;
+                private String splitter = "parentClassKey";
+                //private String mFileName = null;
+                private Uri downloadUrl;
 
                 @Override
             protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +67,57 @@ public class GuessingActivity extends AppCompatActivity implements
                     newSong = (Button) findViewById(R.id.newSong);
                     submitTitle = (Button) findViewById(R.id.submitTitle);
                     songSuggestion = (EditText) findViewById(R.id.songSuggestion);
-
+                    play = (ImageButton) findViewById(R.id.play);
+                    pause = (ImageButton) findViewById(R.id.pause);
 
                     newSong.setOnClickListener(this);
                     songSuggestion.setOnClickListener(this);
+                    play.setOnClickListener(this);
+                    pause.setOnClickListener(this);
+                    storage = FirebaseStorage.getInstance();
 
-                AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
-                        AuthenticationResponse.Type.TOKEN,
-                        REDIRECT_URI);
+                    play.setVisibility(View.GONE);
+                    pause.setVisibility(View.GONE);
+
+                    //mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    // mFileName += "/recorded_tune.3gp";
+
+
+                    database = FirebaseDatabase.getInstance();
+
+                    database.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            audioFiles = new ArrayList<String>();
+                            for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                if (!(user.getKey().equals(FirebaseAuth.getInstance().getUid()))) {
+                                    for (DataSnapshot song : user.child("Songs").getChildren()) {
+                                        audioFiles.add(song.getValue() + splitter
+                                                + user.getKey());
+                                    }
+                                }
+                            }
+                            getRandomID();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+
+                    });
+
+                    AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
+                            AuthenticationResponse.Type.TOKEN,
+                            REDIRECT_URI);
                 builder.setScopes(new String[]{"user-read-private", "streaming"});
                 AuthenticationRequest request = builder.build();
 
                 AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
 
             }
+
 
             @Override
             protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -136,10 +200,54 @@ public class GuessingActivity extends AppCompatActivity implements
                 @Override
                 public void onClick(View view) {
                     if (view == newSong) {
-
+                        getRandomID();
+                        Toast.makeText(GuessingActivity.this, "New Song Loaded"
+                                , Toast.LENGTH_SHORT).show();
                     }
                     if (view == submitTitle) {
                         songSuggestion.getText();
                     }
+                    if (view == play) {
+                        try {
+                            MediaPlayer player = new MediaPlayer();
+                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            player.setDataSource(downloadUrl.toString());
+                            player.prepare();
+                            player.start();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+                    }
+                    if (view == pause) {
+
+                    }
+                }
+
+                private void getSong(String randUserID, String randSongID) {
+                    storageRef = storage.getReference(randUserID);
+                    storageRef.child(randSongID + ".3pg")
+                            .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            play.setVisibility(View.VISIBLE);
+                            System.out.println(downloadUrl = uri);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                        }
+                    });
+
+
+                }
+
+                public void getRandomID() {
+                    String result = audioFiles.get(new Random().nextInt(audioFiles.size()));
+                    String randUserID = result.split(splitter)[1];
+                    System.out.println("RandUserID: " + randUserID);
+                    String randSongID = result.split(splitter)[0];
+                    System.out.println("RandSongID: " + randSongID);
+                    getSong(randUserID, randSongID);
                 }
             }
