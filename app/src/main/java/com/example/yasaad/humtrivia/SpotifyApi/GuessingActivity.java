@@ -208,29 +208,14 @@ public class GuessingActivity extends AppCompatActivity implements
                     }
                     if (view == submitTitle) {
                         database.getReference().child(randUserID).child("Songs")
-                                .child(randSongID).child("Names")
+                                .child(randSongID).child("Name")
                                 .setValue(songSuggestion.getText().toString());
                         songSuggestion.setText("");
                         getRandomID();
+                        ;
                     }
                     if (view == play) {
-                        play.setVisibility(View.GONE);
-                        pause.setVisibility(View.VISIBLE);
-                        try {
-                            player = new MediaPlayer();
-                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                            player.setDataSource(downloadUrl.toString());
-                            player.prepare();
-                            player.start();
-                            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                @Override
-                                public void onCompletion(MediaPlayer mediaPlayer) {
-                                    pause.setVisibility(View.GONE);
-                                    play.setVisibility(View.VISIBLE);
-                                }
-                            });
-                        } catch (Exception e) {
-                        }
+                        play();
                     }
                     if (view == pause) {
                         pause.setVisibility(View.GONE);
@@ -243,14 +228,34 @@ public class GuessingActivity extends AppCompatActivity implements
                     }
                 }
 
+                private void play() {
+                    play.setVisibility(View.GONE);
+                    pause.setVisibility(View.VISIBLE);
+                    try {
+                        player = new MediaPlayer();
+                        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        player.setDataSource(downloadUrl.toString());
+                        player.prepare();
+                        player.start();
+                        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                pause.setVisibility(View.GONE);
+                                play.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    } catch (Exception e) {
+                    }
+                }
+
                 private void getSong(String randUserID, String randSongID) {
                     storageRef = storage.getReference(randUserID);
                     storageRef.child(randSongID + ".3pg")
                             .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            play.setVisibility(View.VISIBLE);
-                            System.out.println(downloadUrl = uri);
+                            downloadUrl = uri;
+                            play();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
