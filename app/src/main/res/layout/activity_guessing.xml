@@ -50,7 +50,6 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:lineColor="#ffffff"
-        android:text="Song Title Suggestion"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large.Inverse"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
