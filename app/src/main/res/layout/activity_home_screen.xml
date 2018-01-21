@@ -4,22 +4,39 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context="com.example.yasaad.humtrivia.UI.HomeScreen"
-    android:background="@drawable/BackGround">
+    android:background="@drawable/BackGround"
+    tools:context="com.example.yasaad.humtrivia.UI.HomeScreen">
 
     <ImageButton
-        android:id="@+id/recordingButton"
-        android:layout_width="144dp"
-        android:layout_height="136dp"
-        android:layout_marginBottom="52dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:id="@+id/myTunes"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@android:color/black"
+        android:contentDescription="Record"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+    <ImageButton
+        android:id="@+id/gameStart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:background="@android:color/black"
         android:contentDescription="Record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_btn_speak_now"/>
+        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+    <ImageButton
+        android:id="@+id/recordingButton"
+        android:layout_width="183dp"
+        android:layout_height="100dp"
+        android:background="@android:color/black"
+        android:contentDescription="Record"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gameStart"
+        app:layout_constraintStart_toEndOf="@+id/myTunes"
+        app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
     <ImageButton
         android:id="@+id/delete"
@@ -92,23 +109,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.313"
         app:srcCompat="@android:drawable/ic_media_pause"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="86dp"
-        android:layout_height="81dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.972"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.98"
-        app:srcCompat="@android:drawable/ic_input_add"/>
 
 
 </android.support.constraint.ConstraintLayout>

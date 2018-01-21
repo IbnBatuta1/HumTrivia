@@ -103,6 +103,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         play = (ImageButton) findViewById(R.id.play);
         stop = (ImageButton) findViewById(R.id.stop);
 
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         mStorage = FirebaseStorage.getInstance().getReference();
