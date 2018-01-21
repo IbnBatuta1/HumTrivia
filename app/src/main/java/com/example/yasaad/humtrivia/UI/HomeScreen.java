@@ -184,11 +184,23 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             play.setVisibility(View.GONE);
             stop.setVisibility(View.VISIBLE);
             audio.start();
+            audio.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    stop.setVisibility(View.GONE);
+                    play.setVisibility(View.VISIBLE);
+                }
+            });
+
         }
         if (view == stop) {
             stop.setVisibility(View.GONE);
             play.setVisibility(View.VISIBLE);
             audio.stop();
+            try {
+                audio.prepare();
+            } catch (IOException e) {
+            }
         }
         if (view == upload) {
             uploadAudio();
