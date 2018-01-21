@@ -39,6 +39,11 @@
         <activity android:name=".UI.HomeScreen"/>
         <activity android:name=".SpotifyApi.GuessingActivity">
         </activity>
-    </application>
 
+        <!-- Needed for LoginActivity to work -->
+        <activity
+            android:name="com.spotify.sdk.android.authentication.LoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+    </application>
 </manifest>
