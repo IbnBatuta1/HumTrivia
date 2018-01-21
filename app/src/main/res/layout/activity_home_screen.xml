@@ -10,7 +10,7 @@
         android:id="@+id/recordingButton"
         android:layout_width="144dp"
         android:layout_height="136dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="52dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:contentDescription="Record"
@@ -22,14 +22,14 @@
     <ImageButton
         android:id="@+id/delete"
         style="@android:style/Widget.DeviceDefault.Light.ImageButton"
-        android:layout_width="70dp"
-        android:layout_height="67dp"
+        android:layout_width="52dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:contentDescription="Delete Recording"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_dialog"/>
+        app:srcCompat="@android:drawable/ic_delete"/>
 
     <ImageButton
         android:id="@+id/upload"
@@ -55,7 +55,7 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.213"/>
 
     <ImageButton
         android:id="@+id/play"
@@ -69,8 +69,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.408"
-        app:srcCompat="@android:drawable/ic_media_play" />
+        app:layout_constraintVertical_bias="0.313"
+        app:srcCompat="@android:drawable/ic_media_play"/>
 
     <ImageButton
         android:id="@+id/stop"
@@ -84,8 +84,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.408"
-        app:srcCompat="@android:drawable/ic_media_pause" />
+        app:layout_constraintVertical_bias="0.313"
+        app:srcCompat="@android:drawable/ic_media_pause"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="86dp"
+        android:layout_height="81dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.972"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.98"
+        app:srcCompat="@android:drawable/ic_input_add"/>
 
 
 </android.support.constraint.ConstraintLayout>
