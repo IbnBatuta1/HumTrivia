@@ -205,14 +205,13 @@ public class GuessingActivity extends AppCompatActivity implements
                 public void onClick(View view) {
                     if (view == newSong) {
                         getRandomID();
-                        Toast.makeText(GuessingActivity.this, "New Song Loaded"
-                                , Toast.LENGTH_SHORT).show();
                     }
                     if (view == submitTitle) {
                         database.getReference().child(randUserID).child("Songs")
                                 .child(randSongID).child("Names")
                                 .setValue(songSuggestion.getText().toString());
                         songSuggestion.setText("");
+                        getRandomID();
                     }
                     if (view == play) {
                         play.setVisibility(View.GONE);
@@ -268,5 +267,7 @@ public class GuessingActivity extends AppCompatActivity implements
                     randUserID = result.split(splitter)[1];
                     randSongID = result.split(splitter)[0];
                     getSong(randUserID, randSongID);
+                    Toast.makeText(GuessingActivity.this, "New Song Loaded"
+                            , Toast.LENGTH_SHORT).show();
                 }
             }

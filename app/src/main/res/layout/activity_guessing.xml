@@ -67,6 +67,8 @@
         android:ems="10"
         android:hint="Song Name"
         android:inputType="textPersonName"
+        android:textColor="@android:color/white"
+        android:textColorHint="?attr/colorButtonNormal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
