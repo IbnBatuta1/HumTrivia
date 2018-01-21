@@ -24,7 +24,7 @@ public class GuessingActivity extends AppCompatActivity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback
             {
 
-            private static final String CLIENT_ID = " a4b3c57e84044600b0ed48bbf97f9c88 ";
+            private static final String CLIENT_ID = "a4b3c57e84044600b0ed48bbf97f9c88";
             private static final String REDIRECT_URI = "humtrivia-login://callback";
 
             private Player mPlayer;
