@@ -47,6 +47,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     private ImageButton recordingButton;
     private ImageButton gameStart;
+    private ImageButton myTunes;
     private ImageButton stop;
     private ImageButton delete;
     private ImageButton upload;
@@ -110,6 +111,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         play = (ImageButton) findViewById(R.id.play);
         stop = (ImageButton) findViewById(R.id.stop);
         gameStart = (ImageButton) findViewById(R.id.gameStart);
+        myTunes = (ImageButton) findViewById(R.id.myTunes);
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -131,6 +133,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         stop.setOnClickListener(this);
         upload.setOnClickListener(this);
         gameStart.setOnClickListener(this);
+        myTunes.setOnClickListener(this);
 
         recordingButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -220,6 +223,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         if (view == gameStart) {
             startActivity(new Intent(HomeScreen.this, GuessingActivity.class));
         }
+        if (view == myTunes) {
+            startActivity(new Intent(HomeScreen.this, MyTunes.class));
+        }
     }
 
     private void uploadAudio() {
@@ -234,7 +240,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         myRef = database.getReference(userID);
 
         StorageReference filepath = mStorage.child(userID).child(audioName + ".3pg");
-        DatabaseReference newSong = myRef.child("Songs").push();
+        DatabaseReference newSong = myRef.child("Songs").child(audioName).push();
         newSong.setValue(audioName);
         filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

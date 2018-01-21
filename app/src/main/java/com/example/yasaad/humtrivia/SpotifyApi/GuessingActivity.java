@@ -60,6 +60,8 @@ public class GuessingActivity extends AppCompatActivity implements
                 //private String mFileName = null;
                 private Uri downloadUrl;
                 private MediaPlayer player;
+                private String randUserID;
+                private String randSongID;
 
                 @Override
             protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class GuessingActivity extends AppCompatActivity implements
                     pause = (ImageButton) findViewById(R.id.pause);
 
                     newSong.setOnClickListener(this);
-                    songSuggestion.setOnClickListener(this);
+                    submitTitle.setOnClickListener(this);
                     play.setOnClickListener(this);
                     pause.setOnClickListener(this);
                     storage = FirebaseStorage.getInstance();
@@ -95,7 +97,7 @@ public class GuessingActivity extends AppCompatActivity implements
                             for (DataSnapshot user : dataSnapshot.getChildren()) {
                                 if (!(user.getKey().equals(FirebaseAuth.getInstance().getUid()))) {
                                     for (DataSnapshot song : user.child("Songs").getChildren()) {
-                                        audioFiles.add(song.getValue() + splitter
+                                        audioFiles.add(song.getKey() + splitter
                                                 + user.getKey());
                                     }
                                 }
@@ -207,7 +209,10 @@ public class GuessingActivity extends AppCompatActivity implements
                                 , Toast.LENGTH_SHORT).show();
                     }
                     if (view == submitTitle) {
-                        songSuggestion.getText();
+                        database.getReference().child(randUserID).child("Songs")
+                                .child(randSongID).child("Names")
+                                .setValue(songSuggestion.getText().toString());
+                        songSuggestion.setText("");
                     }
                     if (view == play) {
                         play.setVisibility(View.GONE);
@@ -260,10 +265,8 @@ public class GuessingActivity extends AppCompatActivity implements
 
                 public void getRandomID() {
                     String result = audioFiles.get(new Random().nextInt(audioFiles.size()));
-                    String randUserID = result.split(splitter)[1];
-                    System.out.println("RandUserID: " + randUserID);
-                    String randSongID = result.split(splitter)[0];
-                    System.out.println("RandSongID: " + randSongID);
+                    randUserID = result.split(splitter)[1];
+                    randSongID = result.split(splitter)[0];
                     getSong(randUserID, randSongID);
                 }
             }
