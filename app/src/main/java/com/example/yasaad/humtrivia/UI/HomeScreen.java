@@ -3,6 +3,7 @@ package com.example.yasaad.humtrivia.UI;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -50,6 +51,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private ProgressBar progressBar;
     private String mFileName = null;
     private FirebaseAuth firebaseAuth;
+    private Uri uri;
+    private MediaPlayer audio;
 
     private ProgressDialog mProgress;
 
@@ -105,8 +108,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         mStorage = FirebaseStorage.getInstance().getReference();
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/recorded_tune.3gp";
+        uri = Uri.fromFile(new File(mFileName));
         mProgress = new ProgressDialog(this);
-
         progressBar.setVisibility(View.GONE);
         play.setVisibility(View.GONE);
         delete.setVisibility(View.GONE);
@@ -163,6 +166,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         mRecorder.release();
         mRecorder = null;
         upload.setVisibility(View.VISIBLE);
+        audio = MediaPlayer.create(HomeScreen.this, uri);
     }
 
 
@@ -179,10 +183,12 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             //WRITE CODE HERE
             play.setVisibility(View.GONE);
             stop.setVisibility(View.VISIBLE);
+            audio.start();
         }
         if (view == stop) {
             stop.setVisibility(View.GONE);
             play.setVisibility(View.VISIBLE);
+            audio.stop();
         }
         if (view == upload) {
             uploadAudio();
@@ -194,7 +200,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         mProgress.setMessage("Uploading Audio...");
         mProgress.show();
 
-        Uri uri = Uri.fromFile(new File(mFileName));
 
         String audioName = UUID.randomUUID().toString();
         String userID = firebaseAuth.getUid();
