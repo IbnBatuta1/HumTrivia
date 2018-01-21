@@ -35,6 +35,7 @@ import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -58,6 +59,7 @@ public class GuessingActivity extends AppCompatActivity implements
                 private String splitter = "parentClassKey";
                 //private String mFileName = null;
                 private Uri downloadUrl;
+                private MediaPlayer player;
 
                 @Override
             protected void onCreate(Bundle savedInstanceState) {
@@ -208,18 +210,32 @@ public class GuessingActivity extends AppCompatActivity implements
                         songSuggestion.getText();
                     }
                     if (view == play) {
+                        play.setVisibility(View.GONE);
+                        pause.setVisibility(View.VISIBLE);
                         try {
-                            MediaPlayer player = new MediaPlayer();
+                            player = new MediaPlayer();
                             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
                             player.setDataSource(downloadUrl.toString());
                             player.prepare();
                             player.start();
+                            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                @Override
+                                public void onCompletion(MediaPlayer mediaPlayer) {
+                                    pause.setVisibility(View.GONE);
+                                    play.setVisibility(View.VISIBLE);
+                                }
+                            });
                         } catch (Exception e) {
-                            // TODO: handle exception
                         }
                     }
                     if (view == pause) {
-
+                        pause.setVisibility(View.GONE);
+                        play.setVisibility(View.VISIBLE);
+                        player.stop();
+                        try {
+                            player.prepare();
+                        } catch (IOException e) {
+                        }
                     }
                 }
 
