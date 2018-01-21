@@ -1,8 +1,10 @@
 package com.example.yasaad.humtrivia.UI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -19,8 +21,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.yasaad.humtrivia.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -29,6 +36,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     private static final String LOG_TAG = "Record_log";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+
+    private StorageReference mStorage;
+
+
     private ImageButton recordingButton;
     private ImageButton stop;
     private ImageButton delete;
@@ -37,6 +48,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private MediaRecorder mRecorder;
     private ProgressBar progressBar;
     private String mFileName = null;
+
+    private ProgressDialog mProgress;
+
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private String[] permissions = {android.Manifest.permission.RECORD_AUDIO
@@ -84,9 +98,10 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         play = (ImageButton) findViewById(R.id.play);
         stop = (ImageButton) findViewById(R.id.stop);
 
-
+        mStorage = FirebaseStorage.getInstance().getReference();
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/recorded_tune.3gp";
+        mProgress = new ProgressDialog(this);
 
         progressBar.setVisibility(View.GONE);
         play.setVisibility(View.GONE);
@@ -96,6 +111,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         delete.setOnClickListener(this);
         play.setOnClickListener(this);
         stop.setOnClickListener(this);
+        upload.setOnClickListener(this);
 
         recordingButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -126,7 +142,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(mFileName);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
 
         try {
             mRecorder.prepare();
@@ -142,6 +158,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
+        upload.setVisibility(View.VISIBLE);
     }
 
 
@@ -163,5 +180,29 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
             stop.setVisibility(View.GONE);
             play.setVisibility(View.VISIBLE);
         }
+        if (view == upload) {
+            uploadAudio();
+        }
+    }
+
+    private void uploadAudio() {
+
+        mProgress.setMessage("Uploading Audio...");
+        mProgress.show();
+        String key = mStorage.getPath();
+
+        Uri uri = Uri.fromFile(new File(mFileName));
+
+        StorageReference filepath = mStorage.child(key).child("Audio").child("new_audio.3pg");
+
+        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                mProgress.dismiss();
+                Toast.makeText(HomeScreen.this, "Successfully Uploaded"
+                        , Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
