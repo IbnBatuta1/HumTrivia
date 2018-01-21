@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.yasaad.humtrivia.R;
+import com.example.yasaad.humtrivia.SpotifyApi.GuessingActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,6 +44,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
     private ImageButton recordingButton;
+    private ImageButton gameStart;
     private ImageButton stop;
     private ImageButton delete;
     private ImageButton upload;
@@ -102,6 +104,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         progressBar = (ProgressBar) findViewById(R.id.recordingInSession);
         play = (ImageButton) findViewById(R.id.play);
         stop = (ImageButton) findViewById(R.id.stop);
+        gameStart = (ImageButton) findViewById(R.id.gameStart);
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -120,6 +123,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         play.setOnClickListener(this);
         stop.setOnClickListener(this);
         upload.setOnClickListener(this);
+        gameStart.setOnClickListener(this);
 
         recordingButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -205,6 +209,9 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         }
         if (view == upload) {
             uploadAudio();
+        }
+        if (view == gameStart) {
+            startActivity(new Intent(HomeScreen.this, GuessingActivity.class));
         }
     }
 
