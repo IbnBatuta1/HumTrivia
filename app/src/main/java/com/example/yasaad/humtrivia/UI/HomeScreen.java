@@ -25,6 +25,8 @@ import com.example.yasaad.humtrivia.R;
 import com.example.yasaad.humtrivia.SpotifyApi.GuessingActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,7 +44,6 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
     private StorageReference mStorage;
 
-
     private ImageButton recordingButton;
     private ImageButton gameStart;
     private ImageButton stop;
@@ -53,6 +54,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private ProgressBar progressBar;
     private String mFileName = null;
     private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
     private Uri uri;
     private MediaPlayer audio;
 
@@ -108,6 +111,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
 
         firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
 
         mStorage = FirebaseStorage.getInstance().getReference();
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -224,8 +229,11 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         String audioName = UUID.randomUUID().toString();
         String userID = firebaseAuth.getUid();
 
-        StorageReference filepath = mStorage.child(userID).child(audioName + ".3pg");
+        myRef = database.getReference(userID);
 
+        StorageReference filepath = mStorage.child(userID).child(audioName + ".3pg");
+        DatabaseReference newSong = myRef.child("Songs").push();
+        newSong.setValue(audioName);
         filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
