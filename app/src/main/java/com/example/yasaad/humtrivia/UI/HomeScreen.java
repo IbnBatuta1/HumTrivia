@@ -29,6 +29,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 
 public class HomeScreen extends AppCompatActivity implements View.OnClickListener {
@@ -48,6 +49,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
     private MediaRecorder mRecorder;
     private ProgressBar progressBar;
     private String mFileName = null;
+    private FirebaseAuth firebaseAuth;
 
     private ProgressDialog mProgress;
 
@@ -97,6 +99,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         progressBar = (ProgressBar) findViewById(R.id.recordingInSession);
         play = (ImageButton) findViewById(R.id.play);
         stop = (ImageButton) findViewById(R.id.stop);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         mStorage = FirebaseStorage.getInstance().getReference();
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -189,11 +193,13 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
 
         mProgress.setMessage("Uploading Audio...");
         mProgress.show();
-        String key = mStorage.getPath();
 
         Uri uri = Uri.fromFile(new File(mFileName));
 
-        StorageReference filepath = mStorage.child(key).child("Audio").child("new_audio.3pg");
+        String audioName = UUID.randomUUID().toString();
+        String userID = firebaseAuth.getUid();
+
+        StorageReference filepath = mStorage.child(userID).child(audioName + ".3pg");
 
         filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
