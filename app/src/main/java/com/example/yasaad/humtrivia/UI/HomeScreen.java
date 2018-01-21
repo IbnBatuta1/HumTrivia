@@ -1,5 +1,6 @@
 package com.example.yasaad.humtrivia.UI;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -94,6 +95,7 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -242,6 +244,8 @@ public class HomeScreen extends AppCompatActivity implements View.OnClickListene
                         , Toast.LENGTH_SHORT).show();
             }
         });
+        play.setVisibility(View.GONE);
+        delete.setVisibility(View.GONE);
 
     }
 }

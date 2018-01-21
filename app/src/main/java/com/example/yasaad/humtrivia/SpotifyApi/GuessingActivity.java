@@ -1,13 +1,14 @@
 package com.example.yasaad.humtrivia.SpotifyApi;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import com.example.yasaad.humtrivia.R;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.example.yasaad.humtrivia.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -20,20 +21,29 @@ import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
 public class GuessingActivity extends AppCompatActivity implements
-        SpotifyPlayer.NotificationCallback, ConnectionStateCallback
+        SpotifyPlayer.NotificationCallback, ConnectionStateCallback, View.OnClickListener
             {
 
             private static final String CLIENT_ID = " a4b3c57e84044600b0ed48bbf97f9c88 ";
             private static final String REDIRECT_URI = "humtrivia-login://callback";
-
-            private Player mPlayer;
                 private static final int REQUEST_CODE = 1337;
-
+                private Button newSong;
+                private Button submitTitle;
+                private EditText songSuggestion;
+                private Player mPlayer;
 
                 @Override
             protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_guessing);
+
+                    newSong = (Button) findViewById(R.id.newSong);
+                    submitTitle = (Button) findViewById(R.id.submitTitle);
+                    songSuggestion = (EditText) findViewById(R.id.songSuggestion);
+
+
+                    newSong.setOnClickListener(this);
+                    songSuggestion.setOnClickListener(this);
 
                 AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                         AuthenticationResponse.Type.TOKEN,
@@ -123,4 +133,13 @@ public class GuessingActivity extends AppCompatActivity implements
                 Log.d("MainActivity", "Received connection message: " + message);
             }
 
-        }
+                @Override
+                public void onClick(View view) {
+                    if (view == newSong) {
+
+                    }
+                    if (view == submitTitle) {
+                        songSuggestion.getText();
+                    }
+                }
+            }
