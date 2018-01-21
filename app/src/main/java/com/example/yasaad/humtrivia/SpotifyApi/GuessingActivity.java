@@ -3,9 +3,7 @@ package com.example.yasaad.humtrivia.SpotifyApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.yasaad.humtrivia.R;
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.spotify.sdk.android.authentication.AuthenticationClient;
@@ -19,6 +17,9 @@ import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
+
+
+
 public class GuessingActivity extends AppCompatActivity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback
             {
@@ -27,18 +28,16 @@ public class GuessingActivity extends AppCompatActivity implements
             private static final String REDIRECT_URI = "humtrivia-login://callback";
 
             private Player mPlayer;
-                private static final int REQUEST_CODE = 1337;
+            private static final int REQUEST_CODE = 1337;
 
 
                 @Override
             protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_guessing);
+                AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
 
-                AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
-                        AuthenticationResponse.Type.TOKEN,
-                        REDIRECT_URI);
-                builder.setScopes(new String[]{"user-read-private", "streaming"});
+                builder.setScopes(new String[]{"streaming"});
                 AuthenticationRequest request = builder.build();
 
                 AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
@@ -64,7 +63,7 @@ public class GuessingActivity extends AppCompatActivity implements
 
                             @Override
                             public void onError(Throwable throwable) {
-                                Log.e("MainActivity", "Could not initialize player: " + throwable.getMessage());
+                                Log.e("GuessingActivity", "Could not initialize player: " + throwable.getMessage());
                             }
                         });
                     }
@@ -79,7 +78,7 @@ public class GuessingActivity extends AppCompatActivity implements
 
             @Override
             public void onPlaybackEvent(PlayerEvent playerEvent) {
-                Log.d("MainActivity", "Playback event received: " + playerEvent.name());
+                Log.d("GuessingActivity", "Playback event received: " + playerEvent.name());
                 switch (playerEvent) {
                     // Handle event type as necessary
                     default:
@@ -89,7 +88,7 @@ public class GuessingActivity extends AppCompatActivity implements
 
             @Override
             public void onPlaybackError(Error error) {
-                Log.d("MainActivity", "Playback error received: " + error.name());
+                Log.d("GuessingActivity", "Playback error received: " + error.name());
                 switch (error) {
                     // Handle error type as necessary
                     default:
@@ -99,28 +98,28 @@ public class GuessingActivity extends AppCompatActivity implements
 
             @Override
             public void onLoggedIn() {
-                Log.d("MainActivity", "User logged in");
+                Log.d("GuessingActivity", "User logged in");
                 mPlayer.playUri(null, "spotify:track:2TpxZ7JUBn3uw46aR7qd6V", 0, 0);
             }
 
             @Override
             public void onLoggedOut() {
-                Log.d("MainActivity", "User logged out");
+                Log.d("GuessingActivity", "User logged out");
             }
 
             @Override
             public void onLoginFailed(Error var1) {
-                Log.d("MainActivity", "Login failed");
+                Log.d("GuessingActivity", "Login failed");
             }
 
             @Override
             public void onTemporaryError() {
-                Log.d("MainActivity", "Temporary error occurred");
+                Log.d("GuessingActivity", "Temporary error occurred");
             }
 
             @Override
             public void onConnectionMessage(String message) {
-                Log.d("MainActivity", "Received connection message: " + message);
+                Log.d("GuessingActivity", "Received connection message: " + message);
             }
 
         }
