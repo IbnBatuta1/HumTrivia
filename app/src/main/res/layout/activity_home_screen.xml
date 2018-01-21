@@ -10,41 +10,39 @@
     <ImageButton
         android:id="@+id/myTunes"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="84dp"
         android:background="@android:color/black"
         android:contentDescription="Record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size"/>
 
     <ImageButton
         android:id="@+id/gameStart"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="84dp"
         android:background="@android:color/black"
         android:contentDescription="Record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+        app:srcCompat="@android:drawable/ic_input_add"/>
 
     <ImageButton
         android:id="@+id/recordingButton"
-        android:layout_width="183dp"
-        android:layout_height="100dp"
+        android:layout_width="187dp"
+        android:layout_height="84dp"
         android:background="@android:color/black"
         android:contentDescription="Record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gameStart"
         app:layout_constraintStart_toEndOf="@+id/myTunes"
-        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+        app:srcCompat="@android:drawable/ic_btn_speak_now"/>
 
     <ImageButton
         android:id="@+id/delete"
         style="@android:style/Widget.DeviceDefault.Light.ImageButton"
-        android:layout_width="52dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="62dp"
+        android:layout_height="64dp"
         android:background="@android:color/black"
         android:contentDescription="Delete Recording"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,8 +53,6 @@
         android:id="@+id/upload"
         android:layout_width="72dp"
         android:layout_height="65dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
         android:background="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
